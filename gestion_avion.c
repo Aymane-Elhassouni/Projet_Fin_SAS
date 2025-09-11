@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 
+int idAvion = 1;
+int idAiroport = 1;
+int nbAvions = 0;
+
 typedef struct{
     int jour;
     int mois;
@@ -8,6 +12,7 @@ typedef struct{
 }Date;
 
 typedef struct {
+    int id;
     char modele[20];
     int capacite;
     char statut[20];
@@ -15,9 +20,9 @@ typedef struct {
 }Avion;
 
 typedef struct {
+    int id;
     char nome[20];
-    Avion flotte[20]; 
-    int nbAvions;
+    Avion flotte[50];
 }Airoport;
 
 
@@ -30,32 +35,66 @@ Airoport AjouterAeroport(){
     return A;
 }
 
+void AfficherListeAvions(Airoport A){
+    int i;
+    printf("nome: %s\n",A.nome);
+    for(i=0;i<nbAvions;i++){
+        printf("-------- Avions --------\n");
+        printf("modele: %s | capacite: %d | statu: %s | date d\'Entree: %d / %d / %d\n",A.flotte[i].modele,A.flotte[i].capacite,A.flotte[i].statut
+            ,A.flotte[i].dateEntree.jour,A.flotte[i].dateEntree.mois,A.flotte[i].dateEntree.annee);
+        
+    }
+}
+
 Avion AjouterAvion(Airoport A){
     Avion avi;
     int i;
-    printf("pour finie les avions click sur 0\n");
-    printf("pour continue les avions click sur 1\n");
+    
     while(i != 0){
-    printf("enter modele de l'avion: ");
-    scanf(" %[^\n]",avi.modele);
-    printf("enter capacite de l'avion: ");
-    scanf("%d",&avi.capacite);
-    printf("enter statu de l'avion: ");
-    scanf(" %[^\n]",avi.statut);
-    printf("enter jeur entree de l'avion: ");
-    scanf("%d",&avi.dateEntree.jour);
-    printf("enter mois entree de l'avion: ");
-    scanf("%d",&avi.dateEntree.mois);
-    printf("enter annee entree de l'avion: ");
-    scanf("%d",&avi.dateEntree.annee);
-    printf("enter 0 ou 1: ");
-    scanf("%d",&i);
+        avi.id = idAvion++;
+        printf("enter modele de l'avion: ");
+        scanf(" %[^\n]",avi.modele);
+        printf("enter capacite de l'avion: ");
+        scanf("%d",&avi.capacite);
+        printf("enter statu de l'avion: ");
+        scanf(" %[^\n]",avi.statut);
+        printf("enter jeur entree de l'avion: ");
+        scanf("%d",&avi.dateEntree.jour);
+        printf("enter mois entree de l'avion: ");
+        scanf("%d",&avi.dateEntree.mois);
+        printf("enter annee entree de l'avion: ");
+        scanf("%d",&avi.dateEntree.annee);
+        printf("pour finie les avions click sur 0.\n");
+        printf("pour continue les avions click sur un nombre.\n");
+        printf("enter 0 ou 1: ");
+        scanf("%d",&i);
     }
     return avi;
 }
+
+
+
+Airoport AjouteAeroportAvi(Airoport A){
+    // AfficherListeAvions(A);
+    A.flotte[nbAvions] = AjouterAvion(A);
+    nbAvions++;
+    return A;
+}
+
+Avion RechercherAvion(){
+
+
+}
+
+Avion ModifierAvion(){
+    printf("enter le modele de l'avion: ");
+
+}
+
 int main(){
     int choix=0,click=0;
     Airoport airoport;
+    
     
      
     do{
@@ -77,13 +116,14 @@ int main(){
           scanf("%d",&click);
           switch(click){
             case 1 :
-            AjouterAvion(airoport);
+            airoport = AjouteAeroportAvi(airoport);
             break;
             case 2:
             break;
             case 3:
             break;
             case 4:
+            AfficherListeAvions(airoport);
             break;
             case 5:
             break;
