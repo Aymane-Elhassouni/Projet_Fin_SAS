@@ -40,7 +40,7 @@ void AfficherListeAvions(Airoport A){
     printf("nome: %s\n",A.nome);
     for(i=0;i<nbAvions;i++){
         printf("-------- Avions --------\n");
-        printf("modele: %s | capacite: %d | statu: %s | date d\'Entree: %d / %d / %d\n",A.flotte[i].modele,A.flotte[i].capacite,A.flotte[i].statut
+        printf("id: %d | modele: %s | capacite: %d | statu: %s | date d\'Entree: %d / %d / %d\n",A.flotte[i].id,A.flotte[i].modele,A.flotte[i].capacite,A.flotte[i].statut
             ,A.flotte[i].dateEntree.jour,A.flotte[i].dateEntree.mois,A.flotte[i].dateEntree.annee);
         
     }
@@ -48,9 +48,6 @@ void AfficherListeAvions(Airoport A){
 
 Avion AjouterAvion(Airoport A){
     Avion avi;
-    int i;
-    
-    while(i != 0){
         avi.id = idAvion++;
         printf("enter modele de l'avion: ");
         scanf(" %[^\n]",avi.modele);
@@ -64,11 +61,6 @@ Avion AjouterAvion(Airoport A){
         scanf("%d",&avi.dateEntree.mois);
         printf("enter annee entree de l'avion: ");
         scanf("%d",&avi.dateEntree.annee);
-        printf("pour finie les avions click sur 0.\n");
-        printf("pour continue les avions click sur un nombre.\n");
-        printf("enter 0 ou 1: ");
-        scanf("%d",&i);
-    }
     return avi;
 }
 
@@ -81,9 +73,19 @@ Airoport AjouteAeroportAvi(Airoport A){
     return A;
 }
 
-Avion RechercherAvion(){
-
-
+Airoport RechercherAvion(Airoport A){
+    int ID,i,found=0;
+    printf("enter de l'avion doi rechercher: ");
+    scanf("%d",&ID);
+    for(i=0;i<nbAvions;i++){
+        if(A.flotte[i].id == ID){
+            found = 1;
+            break;
+        }
+    }
+    if(found == 1)
+    printf("%d est prisent",ID);
+    return A;
 }
 
 Avion ModifierAvion(){
@@ -93,6 +95,7 @@ Avion ModifierAvion(){
 
 int main(){
     int choix=0,click=0;
+    int i;
     Airoport airoport;
     
     
@@ -116,7 +119,13 @@ int main(){
           scanf("%d",&click);
           switch(click){
             case 1 :
-            airoport = AjouteAeroportAvi(airoport);
+             while(i != 0){
+                airoport = AjouteAeroportAvi(airoport);
+                printf("pour continue les avions click sur un nombre.\n");
+                printf("pour finie les avions click sur 0.\n");
+                printf("enter 0 ou 1: ");
+                scanf("%d",&i);
+            }
             break;
             case 2:
             break;
@@ -126,6 +135,7 @@ int main(){
             AfficherListeAvions(airoport);
             break;
             case 5:
+            airoport = RechercherAvion(airoport);
             break;
           }
         
