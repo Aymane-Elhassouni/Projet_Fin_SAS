@@ -39,9 +39,9 @@ void AfficherListeAvions(Airoport A){
     int i;
     printf("nome: %s\n",A.nome);
     for(i=0;i<nbAvions;i++){
-        printf("-------- Avions --------\n");
+        printf("-------- Avions %d --------\n",A.flotte[i].id);
         printf("id: %d | modele: %s | capacite: %d | statu: %s | date d\'Entree: %d / %d / %d\n",A.flotte[i].id,A.flotte[i].modele,A.flotte[i].capacite,A.flotte[i].statut
-            ,A.flotte[i].dateEntree.jour,A.flotte[i].dateEntree.mois,A.flotte[i].dateEntree.annee);
+        ,A.flotte[i].dateEntree.jour,A.flotte[i].dateEntree.mois,A.flotte[i].dateEntree.annee);
         
     }
 }
@@ -67,14 +67,24 @@ Avion AjouterAvion(Airoport A){
 
 
 Airoport AjouteAeroportAvi(Airoport A){
-    // AfficherListeAvions(A);
     A.flotte[nbAvions] = AjouterAvion(A);
     nbAvions++;
     return A;
 }
 
 Airoport RechercherAvion(Airoport A){
-    int ID,i,found=0;
+    int ID,i,found1=0,found=0;
+    char modele[20];
+    int choix;
+    printf("enter 1 ou 2: ");
+    scanf("%d",&choix);
+    switch(choix){
+        case 1:
+        break;
+        case 2:
+        
+    }
+    
     printf("enter de l'avion doi rechercher: ");
     scanf("%d",&ID);
     for(i=0;i<nbAvions;i++){
@@ -83,12 +93,31 @@ Airoport RechercherAvion(Airoport A){
             break;
         }
     }
-    if(found == 1)
-    printf("%d est prisent",ID);
+    if(found == 1){
+        printf("l'avion %d est prisent\n",ID);
+        printf("-------- Avions %d --------\n",ID);
+        printf("id: %d | modele: %s | capacite: %d | statu: %s | date d\'Entree: %d / %d / %d\n",A.flotte[i].id,A.flotte[i].modele,A.flotte[i].capacite,A.flotte[i].statut
+        ,A.flotte[i].dateEntree.jour,A.flotte[i].dateEntree.mois,A.flotte[i].dateEntree.annee);
+    }
+
+    printf("enter le modele de l'avion:");
+    scanf(" %[^\n]",modele);
+    for(i=0;i<nbAvions;i++){
+        if(strcmp(A.flotte[i].modele,modele) == 0){
+            found1 = 1;
+            break;
+        }
+    }
+    if(found1 == 1){
+        printf("l'avion %s est prisent\n",modele);
+        printf("-------- Avions %d --------\n",ID);
+        printf("id: %d | modele: %s | capacite: %d | statu: %s | date d\'Entree: %d / %d / %d\n",A.flotte[i].id,A.flotte[i].modele,A.flotte[i].capacite,A.flotte[i].statut
+        ,A.flotte[i].dateEntree.jour,A.flotte[i].dateEntree.mois,A.flotte[i].dateEntree.annee);
+    }
     return A;
 }
 
-Avion ModifierAvion(){
+Airoport ModifierAvion(Airoport A){
     printf("enter le modele de l'avion: ");
 
 }
