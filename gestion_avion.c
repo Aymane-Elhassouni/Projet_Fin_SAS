@@ -112,8 +112,6 @@ Avion AjouterAvion(Airoport A){
     return avi;
 }
 
-
-
 Airoport AjouteAeroportAvi(Airoport A){
     A.flotte[nbAvions] = AjouterAvion(A);
     nbAvions++;
@@ -123,7 +121,7 @@ Airoport AjouteAeroportAvi(Airoport A){
 Airoport RechercherAvion(Airoport A){
     int i,found1=0,found=0;
     char modele[20];
-    int ID;
+    int id;
     int choix;
     printf("1 - Recherch by id.\n");
     printf("2 - Recherch by modele.\n");
@@ -132,19 +130,21 @@ Airoport RechercherAvion(Airoport A){
     switch(choix){
         case 1:
         printf("enter de l'avion doi rechercher: ");
-        scanf("%d",&ID);
+        scanf("%d",&id);
         for(i=0;i<nbAvions;i++){
-        if(A.flotte[i].id == ID){
+        if(A.flotte[i].id == id){
             found = 1;
             break;
         }
     }
         if(found == 1){
-          printf("l'avion %d est prisent\n",ID);
-          printf("-------- Avions %d --------\n",ID);
+          printf("l'avion %d est prisent\n",id);
+          printf("-------- Avions %d --------\n",id);
           printf("id: %d | modele: %s | capacite: %d | statu: %s | date d\'Entree: %d / %d / %d\n",A.flotte[i].id,A.flotte[i].modele,A.flotte[i].capacite,A.flotte[i].statut
           ,A.flotte[i].dateEntree.jour,A.flotte[i].dateEntree.mois,A.flotte[i].dateEntree.annee);
         }
+        else if(found == 0)
+        printf("l'avion %d est absent\n",id);
         break;
         case 2:
         printf("enter le modele de l'avion:");
@@ -157,22 +157,46 @@ Airoport RechercherAvion(Airoport A){
         }
         if(found1 == 1){
           printf("l'avion %s est prisent\n",modele);
-          printf("-------- Avions %d --------\n",ID);
+          printf("-------- Avions %d --------\n",id);
           printf("id: %d | modele: %s | capacite: %d | statu: %s | date d\'Entree: %d / %d / %d\n",A.flotte[i].id,A.flotte[i].modele,A.flotte[i].capacite,A.flotte[i].statut
           ,A.flotte[i].dateEntree.jour,A.flotte[i].dateEntree.mois,A.flotte[i].dateEntree.annee);
         }
+        else if(found1 == 0)
+        printf("l'avion %d est absent\n",id);
         break;
         
     }
     
-    
-
-    
     return A;
 }
 
+Airoport SupprimerAvion(Airoport A){
+    int index = -1;
+    int id;
+    RechercherAvion(A);
+    printf("id : ");
+    scanf("%d", &id);
+    for (int i = 0 ; i < nbAvions ; i++) {
+        if (A.flotte[i].id == id) {
+            index = i;
+            break;
+        }
+    }
+    for (int i = index ; i < nbAvions -1 ; i++) {
+        A.flotte[i] = A.flotte[i+1];
+    }
+    Avion avi;
+    A.flotte[nbAvions-1] = avi; 
+    nbAvions--;
+    
+    return A;
 
+}
 
+Airoport TrierAvions(Airoport A){
+    
+    return A;
+}
 int main(){
     int choix=0,click=0;
     int i;
@@ -207,6 +231,7 @@ int main(){
             airoport = ModifierAvion(avi,airoport);
             break;
             case 3:
+            airoport = SupprimerAvion(airoport);
             break;
             case 4:
             AfficherListeAvions(airoport);
